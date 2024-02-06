@@ -1,0 +1,21 @@
+SELECT id, veh_make as "Make", veh_model as "Model", veh_year as "Year"
+from Vehicle
+WHERE
+current_use is false;
+
+SELECT id, veh_make as "Make", veh_model as "Model", veh_year as "Year"
+from Vehicle
+WHERE
+current_use is true;
+
+SELECT id
+FROM Vehicle
+WHERE current_use IS false;
+
+
+SELECT MAX(id) from Trips;
+
+SELECT total_mileage FROM Vehicle 
+WHERE id IS x
+
+INSERT INTO Trips (id, vehicle_used, driver, 

@@ -1,0 +1,126 @@
+body {
+  background-image: url("images/blank.png");
+  background-size: 150px;
+  background-repeat: repeat-xy;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #718878;
+  color: white;
+  padding: 20px; /* Add padding for better spacing */
+  box-sizing: border-box; /* Include padding and border in the total width and height of an element */
+}
+
+.car-logo {
+  width: 100px;
+  height: auto;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.car-title {
+  font-size: 36px;
+  margin-top: 12px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.button {
+  display: inline-block;
+  width: 155px;
+  height: 50px;
+  margin-top: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  background-color: #039BE5;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.error {
+  color: blueviolet;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.account_creation {
+  margin-top: 12px;
+  width: 300px;
+  background-color: #fff;
+  color: #000;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.start-trip {
+  margin-top: 12px;
+}
+
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.fieldset p {
+  margin: 10px 0;
+  display: flex;
+  align-items: flex-end;
+}
+
+.fieldset label {
+  width: 150px;
+  margin-right: 10px;
+  text-align: left;
+}
+
+.fieldset input {
+  flex: 1;
+  padding: 5px;
+  box-sizing: border-box;
+  text-align: right;
+}
+
+.footer {
+  background-color: #515151;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  right: 0;
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Vehicle</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="icon" href="images\car_drawing.ico" type="imasge/x-icon">
+    <meta name="author" content="Ken Page">
+    <meta name="description" content="Add Vehicle">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="service-worker.js"></script>
+    <script src="script-add-vehicle.js"></script>
+    <link rel="manifest" href="manifest.json" />
+    <script src="app.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+    <img class ="car-logo" src=".\images\car2.png" alt="Car Logo">
+    <p id="message" class="error"></p>
+    <form action="" class="add-vehicle">
+        <fieldset class="input">
+            <legend>Please complete all fields:</legend>
+            <p>
+                <label for="make">Vehicle Make:</label>
+                <input type="text" name="veh-make" id="veh-make" placeholder="Make: (i.e. Ford)" required autofocus>
+            </p>
+            <p>
+                <label for="model">Vehicle Model:</label>
+                <input type="text" name="veh-model" id="veh-model" placeholder="Model: (i.e. Fusion)" required>
+            </p>
+            <p>
+                <label for="year">Vehicle Model Year:</label>
+                <input type="number" name="veh-year" id="veh-year" placeholder="Model Year:" required>
+            </p>
+            <p>
+                <label for="date">Date to Add to Fleet:</label>
+                <input type="date-added" name="date-added" id="date-added" placeholder="Today's Date: (format YYYYMMDD)" required>
+            </p>
+            <p>
+                <label for="mileage">Current Mileage:</label>
+                <input type="mileage" name="mileage" id="mileage" placeholder="Current Mileage" required>
+            </p>
+        </fieldset>
+    </form>    
+    <table class="button-container">
+        <tr> 
+            <td></td>
+            <td>
+                <button id="add" class="button">Add Vehicle</button>
+            </td>
+            <td>
+                <a href="index.html" id="cancel" class="button">Cancel</a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+</body>
+
+<footer>
+    <p>
+        <small>
+            Copyright &copy; Ken Page - CIS141
+        </small>
+    </p>
+</footer>
+
+</html>
+

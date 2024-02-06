@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Ken Page">
+  <meta name="description" content="Car DB">
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="icon" href="images\car_drawing.ico" type="imasge/x-icon">
+    <title>Car DB</title>
+    <script src="service-worker.js"></script>
+    <script src="script-index.js"></script>
+    <link rel="manifest" href="manifest.json">
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+          document.getElementById("add-car").addEventListener("click", function() {
+              window.location.href = "add_car.html";
+          });
+
+          document.getElementById("add-person").addEventListener("click", function() {
+              window.location.href = "add_personnel.html";
+          });
+
+          document.getElementById("sign-out-car").addEventListener("click", function() {
+              window.location.href = "start_trip.html";
+          });
+
+          document.getElementById("sign-in-car").addEventListener("click", function() {
+              window.location.href = "end_trip.html";
+          });
+      });
+  </script>
+      
+</head>
+
+<body>
+  <div class="container">
+    <img class="car-logo" src=".\images\car2.png" alt="Car Logo">
+    <h1 class="car-title">Welcome</h1>
+    <p id="message" class="error"></p>
+  </div>
+
+  <div class="container">
+    <h2>What would you like to do?</h2>
+    <div class="buttons">
+        <button type="button" id="add-car" class="button">Add Car</button>
+        <button type="button" id="add-person" class="button">Add Personnel</button>
+        <button type="button" id="sign-out-car" class="button">Start Trip</button>
+        <button type="button" id="sign-in-car" class="button">End Trip</button>
+    </div>
+  </div>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(registration => {
+            console.log('Service Worker registered');
+          })
+          .catch(error => {
+            console.error('Service Worker registration failed:', error);
+          });
+      });
+    }
+  </script>
+</body>
+
+<footer>
+    <p>
+        <small>
+            Copyright &copy; Ken Page - CIS141
+        </small>
+    </p>
+</footer>
+
+</html>

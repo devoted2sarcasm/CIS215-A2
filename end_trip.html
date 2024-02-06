@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Display</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="icon" href="images\car2.ico" type="imasge/x-icon">
+    <meta name="author" content="Ken Page">
+    <meta name="description" content="Car DB">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="service-worker.js"></script>
+    <script src="script-end-trip.js"></script>
+    <link rel="manifest" href="manifest.json" />
+    <script src="app.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <img class="car-logo" src=".\images\car2.png" alt="car Logo">
+        <h1>End Trip</h1>
+        <table class="car-details">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Make</th>
+                    <th>Model</th>
+                    <th>Year</th>
+                    <th>Mileage</th>
+                </tr>
+            </thead>
+            <tbody id="car-list-placeholder">
+                <!-- Cars will be dynamically populated here -->
+            </tbody>
+        </table>
+        
+        <h2>End Trip</h2>
+        <p id="message" class="error"></p>
+        <form action="" class="end-trip">
+            <fieldset>
+                <legend>Please complete all fields:</legend>
+                <p>
+                    <label for="vehicleid">Vehicle ID:</label>
+                    <input type="number" name="vehicleid" id="vehicleid" placeholder="Vehicle ID: See list of availabe cars" required autofocus>
+                </p>
+                <p>
+                    <label for="condition">Condition of Vehicle:</label>
+                    <input type="text" name="condition" id="password" placeholder="condition" required>
+                </p>
+                <p>
+                    <label for="date-end">Trip Start Date:</label>
+                    <input type="number" name="date-start" id="date-start" placeholder="Format: YYYYMMDD" required>
+                </p>
+                <p>
+                    <label for="time-end">Start Time of Trip:</label>
+                    <input type="number" name="time-start" id="time-start" placeholder="Format 24H - i.e. 1700 = 5:00pm" required>
+                </p>
+                <p>
+                    <label for="fuel">Fuel Level:</label>
+                    <input type="number" name="fuel" id="fuel" placeholder="Enter as 2-digit percentage - 99 for full" required>
+                </p>
+            </fieldset>
+        </form>
+        <table class="button-container">
+            <tr> 
+                <td></td>
+                <td>
+                    <button id="end-trip" class="button">End Trip</button>
+                </td>
+                <td>
+                    <a href="index.html" id="cancel" class="button">Cancel</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+</body>
+
+<footer>
+    <p>
+        <small>
+            &copy; Ken Page - CIS141
+        </small>
+    </p>
+</footer>
+
+
+</html>

@@ -1,83 +1,63 @@
-// script-start-trip.js
+document.addEventListener('DOMContentLoaded', () => {
+    // Wait for the DOM to be fully loaded
 
-document.addEventListener("DOMContentLoaded", function () {
-    // Fetch cars data and populate the table
-    fetchCarsData();
+    // Get references to form elements
+    const makeInput = document.getElementById('veh-make');
+    const modelInput = document.getElementById('veh-model');
+    const yearInput = document.getElementById('veh-year');
+    const dateAddedInput = document.getElementById('date-added');
+    const mileageInput = document.getElementById('mileage');
 
-    // Event listener for the Start Trip button
-    document.getElementById("start-trip").addEventListener("click", startTrip);
+    // Get reference to the add button
+    const addButton = document.getElementById('add');
 
-    // Event listener for the Cancel button
-    document.getElementById("cancel").addEventListener("click", function () {
-        window.location.href = "index.html";
+    // Add click event listener to the add button
+    addButton.addEventListener('click', () => {
+        // Get values from form inputs
+        const make = makeInput.value;
+        const model = modelInput.value;
+        const year = yearInput.value;
+        const dateAdded = dateAddedInput.value;
+        const mileage = mileageInput.value;
+
+        // Validate form inputs (add your validation logic here)
+
+        // Call a function to add the vehicle (replace with your actual implementation)
+        addVehicle(make, model, year, dateAdded, mileage, mileage);
     });
+
+    // Function to add the vehicle (replace this with your actual implementation)
+    function addVehicle(make, model, year, dateAdded, mileage) {
+        // Make an API request to add the vehicle
+        // Example: You can use fetch or another library to send a POST request to your server endpoint
+        fetch('/api/add-vehicle', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                make,
+                model,
+                year,
+                dateAdded,
+                mileage,
+            }),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to add the vehicle');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Handle success (replace with your actual success handling logic)
+                console.log('Vehicle added successfully:', data);
+                // Redirect to indexcar.html after successful addition
+                window.location.href = '/indexcar.html';
+            })
+            .catch(error => {
+                // Handle error (replace with your actual error handling logic)
+                console.error('Error adding the vehicle:', error.message);
+            });
+    }
 });
-
-function fetchCarsData() {
-    // Open a WebSQL database
-    const db = openDatabase("carsDB", "1.0", "Cars Database", 2 * 1024 * 1024);
-
-    // Execute a query to fetch cars data
-    db.transaction(function (tx) {
-        tx.executeSql("SELECT id, veh_make as Make, veh_model as Model, veh_year as Year FROM Vehicle WHERE current_use = 0;", [], function (tx, results) {
-            const carsData = results.rows;
-            populateCars(carsData);
-        });
-    });
-}
-
-function populateCars(carsData) {
-    const carListPlaceholder = document.getElementById("car-list-placeholder");
-
-    for (let i = 0; i < carsData.length; i++) {
-        const car = carsData.item(i);
-        const row = document.createElement("tr");
-        row.innerHTML = `<td>${car.id}</td>
-                         <td>${car.Make}</td>
-                         <td>${car.Model}</td>
-                         <td>${car.Year}</td>`;
-        carListPlaceholder.appendChild(row);
-    }
-}
-
-function startTrip(event) {
-    event.preventDefault();
-
-    // Get form values
-    const vehicleId = document.getElementById("vehicleid").value;
-    const driverId = document.getElementById("driver").value;
-    // ... Get other form values
-
-    // Perform validation checks
-    if (!validateForm(vehicleId, driverId /*, ... other form values */)) {
-        return;
-    }
-
-    // Perform additional checks (e.g., check if vehicleId and driverId exist in the database)
-
-    // If all checks passed, proceed with inserting data into the database
-    const db = openDatabase("carsDB", "1.0", "Cars Database", 2 * 1024 * 1024);
-    db.transaction(function (tx) {
-        // Execute the insert query
-        tx.executeSql("INSERT INTO Trips (id, vehicle_used, driver, /*... other columns */) VALUES ((SELECT MAX(id) FROM Trips) + 1, ?, ? /*... other values */);", [vehicleId, driverId /*... other values */], function (tx, results) {
-            alert("Trip started successfully");
-            // Optionally, redirect to another page or perform additional actions
-        }, function (tx, error) {
-            alert("Failed to start trip. Please try again.");
-            console.error(error.message);
-        });
-    });
-}
-
-function validateForm(vehicleId, driverId /*, ... other form values */) {
-    // Add your validation logic here
-    // Return true if validation passes, false otherwise
-
-    // Example validation for non-empty fields
-    if (vehicleId.trim() === "" || driverId.trim() === "") {
-        alert("Please fill in all required fields.");
-        return false;
-    }
-
-    return true;
-}

@@ -10,8 +10,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="service-worker.js"></script>
     <script src="script-start-trip.js"></script>
-    <link rel="manifest" href="manifest.json" />
-    <script src="app.js"></script>
 
 </head>
 
@@ -19,29 +17,18 @@
     <div class="container">
         <img class="car-logo" src=".\images\car2.png" alt="car Logo">
         <h1>Start Trip</h1>
-        <table class="car-details">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Make</th>
-                    <th>Model</th>
-                    <th>Year</th>
-                    <th>Mileage</th>
-                </tr>
-            </thead>
-            <tbody id="car-list-placeholder">
-                <!-- Cars will be dynamically populated here -->
-            </tbody>
-        </table>
-        
+                
         <h2>Start Trip</h2>
         <p id="message" class="error"></p>
         <form action="" class="start-trip">
             <fieldset>
                 <legend>Please complete all fields:</legend>
                 <p>
-                    <label for="vehicleid">Vehicle ID:</label>
-                    <input type="number" name="vehicleid" id="vehicleid" placeholder="Vehicle ID: See list of availabe cars" required autofocus>
+                    <label for="vehicleid">Vehicle:</label>
+                    <!-- Add a dropdown/select element for available cars -->
+                    <select name="vehicleid" id="vehicleid" required>
+                        <!-- Cars will be dynamically populated here -->
+                    </select>
                 </p>
                 <p>
                     <label for="driver">Driver ID:</label>
@@ -84,11 +71,27 @@
                     <button id="start-trip" class="button">Start Trip</button>
                 </td>
                 <td>
-                    <a href="index.html" id="cancel" class="button">Cancel</a>
+                    <a href="indexcar.html" id="cancel" class="button">Cancel</a>
                 </td>
             </tr>
         </table>
     </div>
+
+    <script>
+        // Fetch available cars and populate the dropdown
+        fetch('/api/available') // Assuming this is the endpoint to get available cars
+            .then(response => response.json())
+            .then(data => {
+                const vehicleDropdown = document.getElementById('vehicleid');
+                data.forEach(car => {
+                    const option = document.createElement('option');
+                    option.value = car.id;
+                    option.text = `${car.Make} ${car.Model} ${car.Year}`;
+                    vehicleDropdown.add(option);
+                });
+            })
+            .catch(error => console.error('Error fetching available cars:', error));
+    </script>
     
 </body>
 

@@ -22,6 +22,16 @@ app.get('/api/availablecars', (req, res) => {
       res.json(availableCars);
     });
   });
+
+  app.get('/api/carsontrips', (req, res) => {
+    dbOperations.getUsedCars((err, availableCars) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+        return;
+      }
+      res.json(availableCars);
+    });
+  });
   
 
 // Example route to add a new car
@@ -81,18 +91,33 @@ app.get('/api/available', (req, res) => {
     });
   });
 
-app.post('/api/start-trip', (req, res) => {
+  app.post('/api/start-trip', (req, res) => {
     const { vehicleId, driverId, passengerId, reason, destination, condition, dateStart, timeStart, fuel } = req.body;
-    
+
     dbOperations.startTrip(vehicleId, driverId, passengerId, reason, destination, condition, dateStart, timeStart, fuel, (err, trip) => {
         if (err) {
-        res.status(500).json({ error: err.message });
-        return;
+            console.error('Error starting the trip:', err); // Log the detailed error
+            res.status(500).json({ error: 'Failed to start the trip' });
+            return;
         }
         res.json(trip);
-        //res.redirect('/indexcar.html');
     });
 });
+
+// Add this route to handle ending a trip
+app.post('/api/end-trip', (req, res) => {
+    const { tripId, endingMileage, vehCondEnd, dateEnd, timeEnd, fuelEnd, issuesThisTrip } = req.body;
+
+    dbOperations.endTrip(tripId, endingMileage, vehCondEnd, dateEnd, timeEnd, fuelEnd, issuesThisTrip, (err) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+        }
+        res.json({ success: true });
+    });
+});
+
+
 
 // Start the server
 app.listen(port, () => {

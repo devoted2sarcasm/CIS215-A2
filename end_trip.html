@@ -37,24 +37,37 @@
             <fieldset>
                 <legend>Please complete all fields:</legend>
                 <p>
-                    <label for="vehicleid">Vehicle ID:</label>
-                    <input type="number" name="vehicleid" id="vehicleid" placeholder="Vehicle ID: See list of availabe cars" required autofocus>
+                    <label for="vehicleid">Vehicle:</label>
+                    <!-- Add a dropdown/select element for available cars -->
+                    <select name="vehicleid" id="vehicleid" required>
+                        <!-- Cars will be dynamically populated here -->
+                    </select>
+                    <input type="hidden" name="tripid" id="tripid">
                 </p>
+                
                 <p>
                     <label for="condition">Condition of Vehicle:</label>
-                    <input type="text" name="condition" id="password" placeholder="condition" required>
+                    <input type="text" name="condition" id="condition" placeholder="condition" required>
                 </p>
                 <p>
-                    <label for="date-end">Trip Start Date:</label>
-                    <input type="number" name="date-start" id="date-start" placeholder="Format: YYYYMMDD" required>
+                    <label for="miles-traveled">Miles Traveled:</label>
+                    <input type="number" name="miles-traveled" id="miles-traveled" placeholder="Miles traveled:" required>
                 </p>
                 <p>
-                    <label for="time-end">Start Time of Trip:</label>
-                    <input type="number" name="time-start" id="time-start" placeholder="Format 24H - i.e. 1700 = 5:00pm" required>
+                    <label for="date-end">Trip End Date:</label>
+                    <input type="number" name="date-end" id="date-end" placeholder="Format: YYYYMMDD" required>
+                </p>
+                <p>
+                    <label for="time-end">End Time of Trip:</label>
+                    <input type="number" name="time-end" id="time-end" placeholder="Format 24H - i.e. 1700 = 5:00pm" required>
                 </p>
                 <p>
                     <label for="fuel">Fuel Level:</label>
                     <input type="number" name="fuel" id="fuel" placeholder="Enter as 2-digit percentage - 99 for full" required>
+                </p>
+                <p>
+                    <label for="issues">Issues this trip:</label>
+                    <input type="text" name="issues" id="issues" placeholder="Enter any issues encountered this trip:">
                 </p>
             </fieldset>
         </form>
@@ -70,6 +83,39 @@
             </tr>
         </table>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const vehicleDropdown = document.getElementById('vehicleid');
+    const tripIdInput = document.getElementById('tripid');
+
+    // Wait for the DOM to be fully loaded
+    fetch('/api/carsontrips') // Adjusted route
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(car => {
+                const option = document.createElement('option');
+                option.value = car.id;
+                option.text = `${car.Make} ${car.Model} ${car.Year}`;
+                
+                // Add data-tripid attribute to each option
+                option.setAttribute('data-tripid', car.tripId);
+
+                vehicleDropdown.add(option);
+            });
+
+            // Initial update of tripIdInput based on the first selected car
+            tripIdInput.value = vehicleDropdown.options[vehicleDropdown.selectedIndex].getAttribute('data-tripid');
+        })
+        .catch(error => console.error('Error fetching available cars:', error));
+
+    // Add event listener to update tripIdInput when the drop-down changes
+    vehicleDropdown.addEventListener('change', () => {
+        tripIdInput.value = vehicleDropdown.options[vehicleDropdown.selectedIndex].getAttribute('data-tripid');
+    });
+});
+
+    </script>
     
 </body>
 

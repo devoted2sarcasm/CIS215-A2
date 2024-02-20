@@ -15,7 +15,7 @@ function getAllCars(callback) {
 
 //function to retrieve available cars
 function getAvail(callback) {
-    db.all('SELECT id, veh_make as "Make", veh_model as "Model", veh_year as "Year" FROM Vehicle WHERE current_use is false;', (err, rows) => {
+    db.all('SELECT id, veh_make as "Make", veh_model as "Model", veh_year as "Year" FROM Vehicle WHERE current_use = 0 OR current_use IS null OR current_use = false;', (err, rows) => {
       if (err) {
         callback(err, null);
         return;
@@ -53,8 +53,8 @@ function startTrip(vehicleId, driverId, passengerId, reason, destination, condit
 
 // Function to add a new car to the database
 function addCar(make, model, year, date_added, miles, callback) {
-    // Assuming you want to set both original_mileage and total_mileage to the same value (miles)
-    db.run('INSERT INTO Vehicle (veh_make, veh_model, veh_year, added_to_fleet, total_mileage) VALUES (?, ?, ?, ?, ?)', [make, model, year, date_added, miles], function (err) {
+
+    db.run('INSERT INTO Vehicle (veh_make, veh_model, veh_year, added_to_fleet, original_mileage) VALUES (?, ?, ?, ?, ?)', [make, model, year, date_added, miles], function (err) {
         if (err) {
             if (callback && typeof callback === 'function') {
                 callback(err);

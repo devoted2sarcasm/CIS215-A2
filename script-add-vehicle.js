@@ -13,23 +13,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add click event listener to the add button
     addButton.addEventListener('click', () => {
-        // Get values from form inputs
+        // Get values from form inputs and convert to numbers
         const make = makeInput.value;
         const model = modelInput.value;
-        const year = yearInput.value;
-        const dateAdded = dateAddedInput.value;
-        const mileage = mileageInput.value;
+        const year = parseInt(yearInput.value, 10); // Convert to integer
+        const dateAdded = parseInt(dateAddedInput.value, 10);
+        const mileage = parseInt(mileageInput.value, 10); // Convert to integer
 
         // Validate form inputs (add your validation logic here)
 
         // Call a function to add the vehicle (replace with your actual implementation)
-        addVehicle(make, model, year, dateAdded, mileage, mileage);
+        addVehicle(make, model, year, dateAdded, mileage);
     });
 
     // Function to add the vehicle (replace this with your actual implementation)
     function addVehicle(make, model, year, dateAdded, mileage) {
-        // Make an API request to add the vehicle
-        // Example: You can use fetch or another library to send a POST request to your server endpoint
         fetch('/api/add-vehicle', {
             method: 'POST',
             headers: {
@@ -47,17 +45,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!response.ok) {
                     throw new Error('Failed to add the vehicle');
                 }
+    
+                // Parse the JSON response
                 return response.json();
             })
             .then(data => {
                 // Handle success (replace with your actual success handling logic)
                 console.log('Vehicle added successfully:', data);
                 // Redirect to indexcar.html after successful addition
-                window.location.href = '/indexcar.html';
+                //window.location.href = '/indexcar.html';
             })
             .catch(error => {
                 // Handle error (replace with your actual error handling logic)
                 console.error('Error adding the vehicle:', error.message);
             });
     }
+    
+    
 });

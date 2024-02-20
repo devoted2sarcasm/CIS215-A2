@@ -12,16 +12,17 @@ app.get('/', (req, res) => {
     res.sendFile('c:/ncmc/cis215/cis215-a2/indexcar.html');
     });
 
-// Example route to get all cars
-app.get('/api/cars', (req, res) => {
-  dbOperations.getAllCars((err, cars) => {
-    if (err) {
-      res.status(500).json({ error: err.message });
-      return;
-    }
-    res.json(cars);
+// route to get available cars
+app.get('/api/availablecars', (req, res) => {
+    dbOperations.getAvail((err, availableCars) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+        return;
+      }
+      res.json(availableCars);
+    });
   });
-});
+  
 
 // Example route to add a new car
 app.post('/api/cars', (req, res) => {
@@ -32,24 +33,29 @@ app.post('/api/cars', (req, res) => {
       res.status(500).json({ error: err.message });
       return;
     }
-    res.json({ message: 'Car added successfully!' });
+    //res.json({ message: 'Car added successfully!' });
     res.redirect('/indexcar.html');
   });
 });
 
 //add to vehicle table
 app.post('/api/add-vehicle', (req, res) => {
-    const { make, model, year, dateAdded, mileage} = req.body;
-    
+    const { make, model, year, dateAdded, mileage } = req.body;
+
+    console.log('Received request to add vehicle:', req.body);
+
     dbOperations.addCar(make, model, year, dateAdded, mileage, (err) => {
         if (err) {
-        res.status(500).json({ error: err.message });
-        return;
+            console.error('Error adding vehicle:', err);
+            res.status(500).json({ error: 'Failed to add the vehicle' });
+            return;
         }
-        res.json({ message: 'Vehicle added successfully!' });
+
         res.redirect('/indexcar.html');
     });
 });
+
+
 
 //route to add personnel
 app.post('/api/add-person', (req, res) => {
@@ -60,7 +66,7 @@ app.post('/api/add-person', (req, res) => {
         res.status(500).json({ error: err.message });
         return;
         }
-        res.json({ message: 'Person added successfully!' });
+        //res.json({ message: 'Person added successfully!' });
         res.redirect('/indexcar.html');
     });
 });
@@ -84,7 +90,7 @@ app.post('/api/start-trip', (req, res) => {
         return;
         }
         res.json(trip);
-        res.redirect('/indexcar.html');
+        //res.redirect('/indexcar.html');
     });
 });
 
